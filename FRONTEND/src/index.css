@@ -1,1 +1,55 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+@layer base {
+  :root {
+    --color-primary: 59 130 246;
+    --color-secondary: 99 102 241;
+    --color-background: 249 250 251;
+    --color-surface: 255 255 255;
+    --color-text: 17 24 39;
+  }
+
+  .dark {
+    --color-primary: 96 165 250;
+    --color-secondary: 129 140 248;
+    --color-background: 17 24 39;
+    --color-surface: 31 41 55;
+    --color-text: 243 244 246;
+  }
+}
+
+.pokemon-title {
+  font-family: 'Press Start 2P', system-ui;
+}
+
+.glassmorphism {
+  @apply backdrop-blur-md bg-white/30 dark:bg-gray-800/30 border border-white/20 dark:border-gray-700/20;
+}
+
+.type-badge {
+  @apply px-2 py-1 rounded-full text-xs font-semibold;
+}
+
+.type-normal { @apply bg-gray-400 text-white; }
+.type-fire { @apply bg-red-500 text-white; }
+.type-water { @apply bg-blue-500 text-white; }
+.type-grass { @apply bg-green-500 text-white; }
+.type-electric { @apply bg-yellow-400 text-black; }
+.type-ice { @apply bg-blue-200 text-gray-800; }
+.type-fighting { @apply bg-red-700 text-white; }
+.type-poison { @apply bg-purple-500 text-white; }
+.type-ground { @apply bg-yellow-600 text-white; }
+.type-flying { @apply bg-indigo-400 text-white; }
+.type-psychic { @apply bg-pink-500 text-white; }
+.type-bug { @apply bg-lime-500 text-white; }
+.type-rock { @apply bg-yellow-800 text-white; }
+.type-ghost { @apply bg-purple-700 text-white; }
+.type-dragon { @apply bg-indigo-700 text-white; }
+.type-dark { @apply bg-gray-800 text-white; }
+.type-steel { @apply bg-gray-500 text-white; }
+.type-fairy { @apply bg-pink-300 text-gray-800; }
+
+.skeleton {
+  @apply animate-pulse bg-gray-200 dark:bg-gray-700 rounded;
+}
