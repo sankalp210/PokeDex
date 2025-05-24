@@ -8,12 +8,21 @@ export const PokemonList = ({ searchTerm = '' }) => {
     const [pokemonList, setPokemonList] = useState([]);
     const [filteredList, setFilteredList] = useState([]);
     const [error, setError] = useState(null);
+    const [prevUrl, setPrevUrl] = useState(null);
+    const [nextUrl, setNextUrl] = useState(null);
+
+    const [pokedexUrl, setPokedexUrl] = useState('https://pokeapi.co/api/v2/pokemon');
 
     useEffect(() => {
         async function DownloadPokemons() {
+
             try {
-                const response = await axios.get('https://pokeapi.co/api/v2/pokemon');
+                const response = await axios.get(`${pokedexUrl}`);
                 const pokemonList = response.data.results;
+
+                setPrevUrl(response.data.previous);
+                setNextUrl(response.data.next);
+
 
                 const pokemonDetails = await Promise.all(
                     pokemonList.map(async (pokemon) => {
@@ -42,7 +51,7 @@ export const PokemonList = ({ searchTerm = '' }) => {
         }
 
         DownloadPokemons();
-    }, []);
+    }, [pokedexUrl]);
 
     useEffect(() => {
         const filtered = pokemonList.filter(pokemon =>
@@ -75,8 +84,29 @@ export const PokemonList = ({ searchTerm = '' }) => {
     }
 
     return (
-        <AnimatePresence>
-            <Pokemon pokemonList={filteredList} />
-        </AnimatePresence>
-    );
+  <>
+    <AnimatePresence>
+      <Pokemon pokemonList={filteredList} />
+    </AnimatePresence>
+
+    <div className="flex justify-center mt-6 space-x-4">
+      <button
+        disabled={prevUrl == null}
+        onClick={() => setPokedexUrl(prevUrl)}
+        className="bg-gradient-to-r from-red-400 to-pink-500 hover:from-red-500 hover:to-pink-600 text-white font-semibold px-6 py-2 rounded-xl shadow-lg transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed"
+      >
+        ⬅ Prev
+      </button>
+
+      <button
+        disabled={nextUrl == null}
+        onClick={() => setPokedexUrl(nextUrl)}
+        className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white font-semibold px-6 py-2 rounded-xl shadow-lg transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed"
+      >
+        Next ➡
+      </button>
+    </div>
+  </>
+);
+
 };
